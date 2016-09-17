@@ -1,0 +1,25 @@
+{
+    "name": "landrok/language-detector",
+    "type": "library",
+    "version": "1.0.0",
+    "description": "A PHP library for detecting languages",
+    "keywords": ["language", "detector", "n-grams"],
+    "homepage": "https://github.com/landrok/language-detector",
+    "license": [
+        "LGPL-2.1+",
+        "MIT"
+    ],
+    "require": {
+        "php": ">=5.4.0 || ^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "codeclimate/php-test-reporter": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "LanguageDetector\\": "src/LanguageDetector/",
+            "LanguageDetectorTest\\": "test/LanguageDetector/"
+        }
+    }
+}
