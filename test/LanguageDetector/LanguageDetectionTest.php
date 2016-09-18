@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpTabsTest;
+namespace LanguageDetectorTest;
 
 use PHPUnit_Framework_TestCase;
 use LanguageDetector\LanguageDetector;
