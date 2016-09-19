@@ -25,7 +25,7 @@ class LanguageDetector
 
     if (!extension_loaded('mbstring'))
     {
-      throw new Exception('Module mbstring must be loaded');
+      throw new Exception('Module mbstring must be loaded'); // @codeCoverageIgnore
     }
 
     foreach (glob($this->datadir . '/*') as $file)
@@ -62,7 +62,7 @@ class LanguageDetector
 
     $this->scores = $scores;
     $this->string = $string;
-    
+
     return $this;
   }
 
