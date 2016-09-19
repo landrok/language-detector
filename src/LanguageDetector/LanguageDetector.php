@@ -8,6 +8,8 @@ class LanguageDetector
 { 
   private $subsets = array();
   private $datadir;
+  private $scores;
+  private $string;
 
   /**
    * Loads all subsets
@@ -33,29 +35,77 @@ class LanguageDetector
   }
 
   /**
-   * Evaluates the probability that the sentence matches a language
+   * Evaluates that a string matches a language
    * 
-   * @param string $sentence
+   * @param string $string
    * 
-   * @return array
+   * @return LanguageDetector $this
+   * 
+   * @throws Exception if $string is not a string
    */
-  public function evaluate($sentence)
+  public function evaluate($string)
   {
-    $probabilities = array();
-    
-    $chunks = $this->chunk($sentence);
+    if (!is_string($string))
+    {
+      throw new Exception('Parameter $string must be a string');
+    }
+
+    $scores = array();
+    $chunks = $this->chunk($string);
 
     foreach ($this->subsets as $lang => $data)
     {
-      $probabilities[$lang] = $this->calculate($chunks, $data['freq']);
+      $scores[$lang] = $this->calculate($chunks, $data['freq']);
     }
 
-    arsort($probabilities);
+    arsort($scores);
 
-    return array(
-      'probabilities' => $probabilities,
-      'sentence' => $sentence,
-    );
+    $this->scores = $scores;
+    $this->string = $string;
+    
+    return $this;
+  }
+
+  /**
+   * Gets the best scored language
+   * 
+   * @return string ISO code
+   * 
+   * @throws Exception if nothing has been evaluated
+   */
+  public function getLanguage()
+  {
+    if (!is_array($this->scores))
+    {
+      throw new Exception('No string has been evaluated');
+    }
+
+    return array_keys($this->scores)[0];
+  }
+
+  /**
+   * Gets all scored subsets
+   * 
+   * @return array An array of ISO codes => scores
+   */
+  public function getScores()
+  {
+    if (!is_array($this->scores))
+    {
+      throw new Exception('No string has been evaluated');
+    }
+
+    return $this->scores;
+  }
+
+  /**
+   * Gets supported languages
+   * 
+   * @return array An array of ISO codes
+   */
+  public function getSupportedLanguages()
+  {
+    return array_keys($this->subsets);
   }
 
   /**

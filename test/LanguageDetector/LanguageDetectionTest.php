@@ -71,7 +71,7 @@ class LanguageDetectionTest extends PHPUnit_Framework_TestCase
 
     foreach($tests as $test)
     {
-      $this->assertEquals($test[0], array_keys($detector->evaluate($test[1])['probabilities'])[0], $test[2]);
+      $this->assertEquals($test[0], $detector->evaluate($test[1])->getLanguage(), $test[2]);
     }
   }
 }
