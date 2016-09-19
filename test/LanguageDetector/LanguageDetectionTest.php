@@ -74,4 +74,18 @@ class LanguageDetectionTest extends PHPUnit_Framework_TestCase
       $this->assertEquals($test[0], $detector->evaluate($test[1])->getLanguage(), $test[2]);
     }
   }
+
+  /**
+   * getScores() method
+   */
+  public function testGetScores()
+  {
+    $detector = (new LanguageDetector())->evaluate('My tailor is rich and Alison is in the kitchen with Bob.');
+
+    // All subsets have been used
+    $this->assertEquals(count($detector->getSupportedLanguages()), count(array_keys($detector->getScores())));
+
+    // getLanguage() returns the best scored subset
+    $this->assertEquals($detector->getLanguage(), array_keys($detector->getScores())[0]);
+  }
 }
