@@ -5,10 +5,17 @@ namespace LanguageDetector;
 use Exception;
 
 class LanguageDetector
-{ 
+{
+  /** @var array */
   private $subsets = array();
+
+  /** @var string */
   private $datadir;
+
+  /** @var array */
   private $scores;
+
+  /** @var string */
   private $text;
 
   /**
@@ -111,12 +118,22 @@ class LanguageDetector
   }
 
   /**
+   * Gets evaluated text
+   * 
+   * @return string
+   */
+  public function getText()
+  {
+    return $this->text;
+  }
+
+  /**
    * Evaluates the probabilities for one language
    * 
    * @param array $chunks
    * @param array $data
    * 
-   * @return float The probabilities that chunks match this subset
+   * @return float The probabilities that chunks match a subset
    */
   private function calculate(array $chunks, array $data)
   {
@@ -125,7 +142,7 @@ class LanguageDetector
   }
 
   /**
-   * Divides sentence into chunks
+   * Divides a text into chunks
    * 
    * @param string $text
    * 
