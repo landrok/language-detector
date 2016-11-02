@@ -9,7 +9,7 @@ class LanguageDetector
   private $subsets = array();
   private $datadir;
   private $scores;
-  private $string;
+  private $text;
 
   /**
    * Loads all subsets
@@ -37,21 +37,21 @@ class LanguageDetector
   /**
    * Evaluates that a string matches a language
    * 
-   * @param string $string
+   * @param string $text
    * 
    * @return \LanguageDetector\LanguageDetector
    * 
    * @throws \Exception if $string is not a string
    */
-  public function evaluate($string)
+  public function evaluate($text)
   {
-    if (!is_string($string))
+    if (!is_string($text))
     {
       throw new Exception('Parameter $string must be a string');
     }
 
     $scores = array();
-    $chunks = $this->chunk($string);
+    $chunks = $this->chunk($text);
 
     foreach ($this->subsets as $lang => $data)
     {
@@ -61,7 +61,7 @@ class LanguageDetector
     arsort($scores);
 
     $this->scores = $scores;
-    $this->string = $string;
+    $this->text = $text;
 
     return $this;
   }
@@ -127,14 +127,14 @@ class LanguageDetector
   /**
    * Divides sentence into chunks
    * 
-   * @param string $sentence
+   * @param string $text
    * 
    * @return array
    */
-  private function chunk($sentence)
+  private function chunk($text)
   {
     $chunks = array();
-    $len = mb_strlen($sentence);
+    $len = mb_strlen($text);
 
     for ($i=0; $i<3; $i++) // Chunk sizes 
     {
@@ -142,7 +142,7 @@ class LanguageDetector
       {
         if ($len > $j + $i)
         {
-          array_push($chunks, mb_substr($sentence, $j, $i + 1));
+          array_push($chunks, mb_substr($text, $j, $i + 1));
         }
       }
     }
