@@ -16,7 +16,7 @@ class LanguageDetector
    * 
    * @param string $dir A directory where subsets are.
    * 
-   * @throws Exception if mbstring is not loaded
+   * @throws \Exception if mbstring is not loaded
    */
   public function __construct($dir = null)
   {
@@ -39,9 +39,9 @@ class LanguageDetector
    * 
    * @param string $string
    * 
-   * @return LanguageDetector $this
+   * @return \LanguageDetector\LanguageDetector
    * 
-   * @throws Exception if $string is not a string
+   * @throws \Exception if $string is not a string
    */
   public function evaluate($string)
   {
@@ -71,7 +71,7 @@ class LanguageDetector
    * 
    * @return string ISO code
    * 
-   * @throws Exception if nothing has been evaluated
+   * @throws \Exception if nothing has been evaluated
    */
   public function getLanguage()
   {
@@ -87,6 +87,8 @@ class LanguageDetector
    * Gets all scored subsets
    * 
    * @return array An array of ISO codes => scores
+   * 
+   * @throws \Exception if nothing has been evaluated
    */
   public function getScores()
   {
