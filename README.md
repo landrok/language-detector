@@ -11,7 +11,7 @@ Table of contents
 =================
 - [Features](#features)
 - [Install](#install)
-- [Examples](#usage)
+- [Examples](#examples)
   - [Single detection](#single-detection)
   - [Multiple detections](#multiple-detections)
   - [Other methods](#other-methods)
@@ -30,7 +30,7 @@ Features
 - Very fast, no database needed
 - Packaged with a 2MB learned dataset
 - Small code, easy to modify
-- N-grams algorythm
+- N-grams algorithm
 - Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1 and HHVM
 
 
@@ -110,7 +110,7 @@ ________________________________________________________________________
 
 __Type__ *\LanguageDetector\LanguageDetector*
 
-It performs the evaluation.
+It performs an evaluation of a given text.
 
 __Example__
 
@@ -167,7 +167,7 @@ ________________________________________________________________________
 
 __Type__ *array*
 
-A list of supported languages. they will be evaluated.
+A list of supported languages that will be evaluated.
 
 __Example__
 
