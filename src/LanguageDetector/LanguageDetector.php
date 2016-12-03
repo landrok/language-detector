@@ -3,11 +3,12 @@
 namespace LanguageDetector;
 
 use Exception;
+use InvalidArgumentException;
 
 class LanguageDetector
 {
   /** @var array */
-  private $subsets = array();
+  private $subsets = [];
 
   /** @var string */
   private $datadir;
@@ -35,10 +36,14 @@ class LanguageDetector
       throw new Exception('Module mbstring must be loaded'); // @codeCoverageIgnore
     }
 
-    foreach (glob($this->datadir . '/*') as $file)
-    {
-      $this->subsets[basename($file)] = json_decode(file_get_contents($file), true);
-    }
+    array_walk(
+      glob($this->datadir . '/*'),
+      function($file) {
+        $this->subsets[basename($file)] = json_decode(
+          file_get_contents($file), true
+        );
+      }
+    );
   }
 
   /**
@@ -48,27 +53,29 @@ class LanguageDetector
    * 
    * @return \LanguageDetector\LanguageDetector
    * 
-   * @throws \Exception if $string is not a string
+   * @throws \InvalidArgumentException if $string is not a string
+   * 
+   * @api
    */
   public function evaluate($text)
   {
     if (!is_string($text))
     {
-      throw new Exception('Parameter $string must be a string');
+      throw new InvalidArgumentException('Parameter $string must be a string');
     }
 
-    $scores = array();
-    $chunks = $this->chunk($text);
-
-    foreach ($this->subsets as $lang => $data)
-    {
-      $scores[$lang] = $this->calculate($chunks, $data['freq']);
-    }
-
-    arsort($scores);
-
-    $this->scores = $scores;
     $this->text = $text;
+
+    $chunks = $this->chunk();
+
+    array_walk(
+      $this->subsets,
+      function($data, $lang) use ($chunks) {
+        $this->scores[$lang] = $this->calculate($chunks, $data['freq']);
+      }
+    );
+
+    arsort($this->scores);
 
     return $this;
   }
@@ -79,6 +86,8 @@ class LanguageDetector
    * @return string ISO code
    * 
    * @throws \Exception if nothing has been evaluated
+   * 
+   * @api
    */
   public function getLanguage()
   {
@@ -91,11 +100,13 @@ class LanguageDetector
   }
 
   /**
-   * Gets all scored subsets
+   * Get all scored subsets
    * 
    * @return array An array of ISO codes => scores
    * 
    * @throws \Exception if nothing has been evaluated
+   * 
+   * @api
    */
   public function getScores()
   {
@@ -108,9 +119,11 @@ class LanguageDetector
   }
 
   /**
-   * Gets supported languages
+   * Get all supported languages
    * 
    * @return array An array of ISO codes
+   * 
+   * @api
    */
   public function getSupportedLanguages()
   {
@@ -118,9 +131,11 @@ class LanguageDetector
   }
 
   /**
-   * Gets evaluated text
+   * Get evaluated text
    * 
    * @return string
+   * 
+   * @api
    */
   public function getText()
   {
@@ -128,38 +143,37 @@ class LanguageDetector
   }
 
   /**
-   * Evaluates the probabilities for one language
+   * Evaluate probabilities for one language
    * 
    * @param array $chunks
+   *
    * @param array $data
    * 
-   * @return float The probabilities that chunks match a subset
+   * @return float Probabilities that chunks match a subset
    */
   private function calculate(array $chunks, array $data)
   {
-    return array_sum(array_values(array_intersect_key($data, array_flip($chunks))))
+    return array_sum(array_intersect_key($data, array_flip($chunks)))
          / array_sum(array_values($data));
   }
 
   /**
-   * Divides a text into chunks
-   * 
-   * @param string $text
+   * Chunk a text
    * 
    * @return array
    */
-  private function chunk($text)
+  private function chunk()
   {
-    $chunks = array();
-    $len = mb_strlen($text);
+    $chunks = [];
+    $len = mb_strlen($this->text);
 
-    for ($i=0; $i<3; $i++) // Chunk sizes 
+    for ($i = 0; $i < 3; $i++) // Chunk sizes 
     {
-      for ($j=0; $j<$len; $j++)
+      for ($j = 0; $j < $len; $j++)
       {
         if ($len > $j + $i)
         {
-          array_push($chunks, mb_substr($text, $j, $i + 1));
+          $chunks[] = mb_substr($this->text, $j, $i + 1);
         }
       }
     }
