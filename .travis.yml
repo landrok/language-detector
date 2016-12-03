@@ -16,6 +16,7 @@ php:
 
 install:
   - composer install
+  - phpunit --self-update
 
 script: phpunit -c phpunit.xml.dist
 
