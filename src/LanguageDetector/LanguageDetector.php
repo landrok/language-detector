@@ -36,14 +36,12 @@ class LanguageDetector
       throw new Exception('Module mbstring must be loaded'); // @codeCoverageIgnore
     }
 
-    array_walk(
-      glob($this->datadir . '/*'),
-      function($file) {
-        $this->subsets[basename($file)] = json_decode(
+    foreach (glob($this->datadir . '/*') as $file)
+    {
+      $this->subsets[basename($file)] = json_decode(
           file_get_contents($file), true
-        );
-      }
-    );
+      );
+    }
   }
 
   /**
