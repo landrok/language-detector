@@ -10,7 +10,8 @@
         "MIT"
     ],
     "require": {
-        "php": ">=5.4.0 || ^7.0"
+        "php": ">=5.4.0 || ^7.0",
+        "webmozart/assert": "^1.2"
     },
     "require-dev": {
         "codeclimate/php-test-reporter": "dev-master"

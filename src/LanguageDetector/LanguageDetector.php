@@ -3,7 +3,7 @@
 namespace LanguageDetector;
 
 use Exception;
-use InvalidArgumentException;
+use WebMozart\Assert\Assert;
 
 class LanguageDetector
 {
@@ -51,16 +51,13 @@ class LanguageDetector
    * 
    * @return \LanguageDetector\LanguageDetector
    * 
-   * @throws \InvalidArgumentException if $string is not a string
+   * @throws \InvalidArgumentException if $text is not a string
    * 
    * @api
    */
   public function evaluate($text)
   {
-    if (!is_string($text))
-    {
-      throw new InvalidArgumentException('Parameter $string must be a string');
-    }
+    Assert::string($text, 'Method evaluate() expects a string. Given %s');
 
     $this->text = $text;
 
