@@ -8,7 +8,7 @@ use LanguageDetector\LanguageDetector;
 class LanguageDetectionTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * Tests the quality of language detection
+   * Tests quality of the language detection
    */
   public function testDetectionReliability()
   {
@@ -69,9 +69,13 @@ class LanguageDetectionTest extends PHPUnit_Framework_TestCase
       ['zh-tw', '嗨，這是一個中國的句子', 'Should be Chinese (T)'],
     ];
 
-    foreach($tests as $test)
+    foreach ($tests as $test)
     {
-      $this->assertEquals($test[0], $detector->evaluate($test[1])->getLanguage(), $test[2]);
+      $this->assertEquals(
+        $test[0],
+        $detector->evaluate($test[1])->getLanguage(),
+        $test[2]
+      );
     }
   }
 
@@ -83,14 +87,20 @@ class LanguageDetectionTest extends PHPUnit_Framework_TestCase
     $detector = (new LanguageDetector())->evaluate('My tailor is rich and Alison is in the kitchen with Bob.');
 
     // All subsets have been used
-    $this->assertEquals(count($detector->getSupportedLanguages()), count(array_keys($detector->getScores())));
+    $this->assertEquals(
+      count($detector->getSupportedLanguages()),
+      count(array_keys($detector->getScores()))
+    );
 
     // getLanguage() returns the best scored subset
-    $this->assertEquals($detector->getLanguage(), array_keys($detector->getScores())[0]);
+    $this->assertEquals(
+      $detector->getLanguage(),
+      array_keys($detector->getScores())[0]
+    );
   }
 
   /**
-   * gettext() method
+   * getText() method
    */
   public function testGetText()
   {
@@ -104,6 +114,9 @@ class LanguageDetectionTest extends PHPUnit_Framework_TestCase
     $detector->evaluate($text);
 
     // After evaluation
-    $this->assertEquals($text, $detector->getText());
+    $this->assertEquals(
+      $text, 
+      $detector->getText()
+    );
   }
 }
