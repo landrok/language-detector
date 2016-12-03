@@ -3,7 +3,7 @@
 namespace LanguageDetector;
 
 use Exception;
-use WebMozart\Assert\Assert;
+use Webmozart\Assert\Assert;
 
 class LanguageDetector
 {
@@ -61,14 +61,7 @@ class LanguageDetector
 
     $this->text = $text;
 
-    $chunks = $this->chunk();
-
-    array_walk(
-      $this->subsets,
-      function($data, $lang) use ($chunks) {
-        $this->scores[$lang] = $this->calculate($chunks, $data['freq']);
-      }
-    );
+    array_walk($this->subsets, $this->calculate($this->chunk()));
 
     arsort($this->scores);
 
@@ -141,15 +134,18 @@ class LanguageDetector
    * Evaluate probabilities for one language
    * 
    * @param array $chunks
-   *
-   * @param array $data
    * 
-   * @return float Probabilities that chunks match a subset
+   * @return \Closure An evaluator
    */
-  private function calculate(array $chunks, array $data)
+  private function calculate(array $chunks)
   {
-    return array_sum(array_intersect_key($data, array_flip($chunks)))
-         / array_sum(array_values($data));
+    return function($data, $lang) use ($chunks)
+    {
+      $this->scores[$lang] = 
+        array_sum(
+          array_intersect_key($data['freq'], array_flip($chunks))
+        ) / array_sum($data['n_words']);
+    };
   }
 
   /**
