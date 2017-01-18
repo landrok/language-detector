@@ -7,6 +7,13 @@ use LanguageDetector\LanguageDetector;
 
 class LanguageDetectorExceptionTest extends PHPUnit_Framework_TestCase
 {
+  protected $evaluator;
+
+  protected function setUp()
+  {
+    $this->evaluator = new LanguageDetector();
+  }
+
   /**
    * evaluate() only accepts strings
    * 
@@ -14,7 +21,7 @@ class LanguageDetectorExceptionTest extends PHPUnit_Framework_TestCase
    */
   public function testEvaluateAnUnexpectedType()
   {
-    (new LanguageDetector())->evaluate(array());
+    $this->evaluator->evaluate(array());
   }
 
   /**
@@ -24,7 +31,7 @@ class LanguageDetectorExceptionTest extends PHPUnit_Framework_TestCase
    */
   public function testGetScoresWithNoEvaluatedString()
   {
-    (new LanguageDetector())->getScores();
+    $this->evaluator->getScores();
   }
 
   /**
@@ -34,6 +41,6 @@ class LanguageDetectorExceptionTest extends PHPUnit_Framework_TestCase
    */
   public function testGetLanguageWithNoEvaluatedString()
   {
-    (new LanguageDetector())->getLanguage();
+    $this->evaluator->getLanguage();
   }
 }
