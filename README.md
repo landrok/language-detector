@@ -65,7 +65,7 @@ ________________________________________________________________________
 ### Multiple detections
 
 If you have a list of texts to detect, a possible way is to instanciate 
-once and then to translate your list.
+once and then to evaluate your list.
 
 ```php
 require_once 'vendor/autoload.php';
