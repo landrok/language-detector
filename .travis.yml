@@ -17,7 +17,7 @@ php:
 install:
   - composer install
 
-script: phpunit -c phpunit.xml.dist
+script: ./vendor/bin/phpunit -c phpunit.xml.dist
 
 after_script:
   ## Code climate
