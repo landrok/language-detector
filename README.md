@@ -107,7 +107,7 @@ API Methods
 -----------
 
 
-####evaluate()
+#### evaluate()
 
 __Type__ *\LanguageDetector\LanguageDetector*
 
@@ -128,7 +128,7 @@ $detector->evaluate('My tailor is rich and Alison is in the kitchen with Bob.')-
 ```
 ________________________________________________________________________
 
-####getLanguage()
+#### getLanguage()
 
 __Type__ *string*
 
@@ -140,7 +140,7 @@ __Example__
 $detector->getLanguage(); // Returns 'en'
 ```
 ________________________________________________________________________
-####getScores()
+#### getScores()
 
 __Type__ *array*
 
@@ -164,7 +164,7 @@ Array
 
 ```
 ________________________________________________________________________
-####getSupportedLanguages()
+#### getSupportedLanguages()
 
 __Type__ *array*
 
@@ -187,7 +187,7 @@ Array
 )
 ```
 ________________________________________________________________________
-####getText()
+#### getText()
 
 __Type__ *string*
 
