@@ -2,10 +2,10 @@
 
 namespace LanguageDetectorTest;
 
-use PHPUnit_Framework_TestCase;
 use LanguageDetector\LanguageDetector;
+use PHPUnit\Framework\TestCase;
 
-class LanguageDetectionTest extends PHPUnit_Framework_TestCase
+class LanguageDetectionTest extends TestCase
 {
   /**
    * Tests quality of the language detection
