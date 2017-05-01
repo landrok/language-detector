@@ -29,7 +29,7 @@ Features
 - More than 50 supported languages
 - Very fast, no database needed
 - Packaged with a 2MB dataset
-- Small code, easy to modify
+- Small code, small footprint
 - N-grams algorithm
 - Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1 and HHVM
 
@@ -49,7 +49,8 @@ Examples
 
 ### Single detection
 
-For a one-shot detection only.
+For one-shot detection only.
+
 This is not recommended if you want to make several consecutive evaluations.
 
 ```php
