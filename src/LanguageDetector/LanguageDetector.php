@@ -19,23 +19,30 @@ use Webmozart\Assert\Assert;
  */ 
 class LanguageDetector
 {
-  /** @var array */
+  /**
+   * @var array
+   */
   private $subsets = [];
 
-  /** @var string */
+  /**
+   * @var string
+   */
   private $datadir;
 
-  /** @var array */
+  /**
+   * @var array
+   */
   private $scores;
 
-  /** @var string */
+  /**
+   * @var string
+   */
   private $text;
 
   /**
    * Loads all subsets
    * 
-   * @param string $dir A directory where subsets are.
-   * 
+   * @param  string $dir A directory where subsets are.
    * @throws \Exception if mbstring is not loaded
    */
   public function __construct($dir = null)
@@ -43,13 +50,11 @@ class LanguageDetector
     $this->datadir = null === $dir
       ? __DIR__ . '/subsets' : rtrim($dir, '/');
 
-    if (!extension_loaded('mbstring'))
-    {
+    if (!extension_loaded('mbstring')) {
       throw new Exception('Module mbstring must be loaded'); // @codeCoverageIgnore
     }
 
-    foreach (glob($this->datadir . '/*') as $file)
-    {
+    foreach (glob($this->datadir . '/*') as $file) {
       $this->subsets[basename($file)] = json_decode(
           file_get_contents($file), true
       );
@@ -59,12 +64,9 @@ class LanguageDetector
   /**
    * Evaluates that a string matches a language
    * 
-   * @param string $text
-   * 
+   * @param  string $text
    * @return \LanguageDetector\LanguageDetector
-   * 
    * @throws \InvalidArgumentException if $text is not a string
-   * 
    * @api
    */
   public function evaluate($text)
@@ -84,15 +86,12 @@ class LanguageDetector
    * Gets the best scored language
    * 
    * @return string ISO code
-   * 
    * @throws \Exception if nothing has been evaluated
-   * 
    * @api
    */
   public function getLanguage()
   {
-    if (!is_array($this->scores))
-    {
+    if (!is_array($this->scores)) {
       throw new Exception('No string has been evaluated');
     }
 
@@ -103,15 +102,12 @@ class LanguageDetector
    * Get all scored subsets
    * 
    * @return array An array of ISO codes => scores
-   * 
    * @throws \Exception if nothing has been evaluated
-   * 
    * @api
    */
   public function getScores()
   {
-    if (!is_array($this->scores))
-    {
+    if (!is_array($this->scores)) {
       throw new Exception('No string has been evaluated');
     }
 
@@ -122,7 +118,6 @@ class LanguageDetector
    * Get all supported languages
    * 
    * @return array An array of ISO codes
-   * 
    * @api
    */
   public function getSupportedLanguages()
@@ -134,7 +129,6 @@ class LanguageDetector
    * Get evaluated text
    * 
    * @return string
-   * 
    * @api
    */
   public function getText()
@@ -145,18 +139,15 @@ class LanguageDetector
   /**
    * Evaluate probabilities for one language
    * 
-   * @param array $chunks
-   * 
+   * @param  array $chunks
    * @return \Closure An evaluator
    */
   private function calculate(array $chunks)
   {
-    return function($data, $lang) use ($chunks)
-    {
+    return function($data, $lang) use ($chunks) {
       $this->scores[$lang] = 
-        array_sum(
-          array_intersect_key($data['freq'], array_flip($chunks))
-        ) / array_sum($data['n_words']);
+        array_sum(array_intersect_key($data['freq'], array_flip($chunks)))
+        / array_sum($data['n_words']);
     };
   }
 
@@ -170,12 +161,10 @@ class LanguageDetector
     $chunks = [];
     $len = mb_strlen($this->text);
 
-    for ($i = 0; $i < 3; $i++) // Chunk sizes 
-    {
-      for ($j = 0; $j < $len; $j++)
-      {
-        if ($len > $j + $i)
-        {
+    // Chunk sizes 
+    for ($i = 0; $i < 3; $i++) {
+      for ($j = 0; $j < $len; $j++) {
+        if ($len > $j + $i) {
           $chunks[] = mb_substr($this->text, $j, $i + 1);
         }
       }
