@@ -12,7 +12,6 @@ Table of contents
 - [Features](#features)
 - [Install](#install)
 - [Examples](#examples)
-  - [Single detection](#single-detection)
   - [Detect language](#detect-language)
   - [Other methods](#other-methods)
 - [API Methods](#api-methods)
@@ -46,7 +45,7 @@ ________________________________________________________________________
 Examples
 --------
 
-### Multiple detections
+### Detect language
 
 If you have a list of texts to detect, a possible way is to instanciate 
 once and then to evaluate your list.
