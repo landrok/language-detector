@@ -13,7 +13,7 @@ Table of contents
 - [Install](#install)
 - [Examples](#examples)
   - [Single detection](#single-detection)
-  - [Multiple detections](#multiple-detections)
+  - [Detect language](#detect-language)
   - [Other methods](#other-methods)
 - [API Methods](#api-methods)
   - [evaluate()](#evaluate)
@@ -31,37 +31,20 @@ Features
 - Packaged with a 2MB dataset
 - Small code, small footprint
 - N-grams algorithm
-- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1 and HHVM
+- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3 and HHVM
 
 
 Install
 ------------
 
 ```sh
-composer require landrok/language-detector:1.0
+composer require landrok/language-detector
 ```
 
 ________________________________________________________________________
 
 Examples
 --------
-
-
-### Single detection
-
-For one-shot detection only.
-
-This is not recommended if you want to make several consecutive evaluations.
-
-```php
-require_once 'vendor/autoload.php';
-
-// One line usage: instanciate, evaluate and get language
-$lang = ( new LanguageDetector\LanguageDetector() )
-          ->evaluate('My sentence is in english')
-          ->getLanguage();
-```
-________________________________________________________________________
 
 ### Multiple detections
 
@@ -71,19 +54,13 @@ once and then to evaluate your list.
 ```php
 require_once 'vendor/autoload.php';
 
-$texts = [
-  'My sentence is in english',
-  'My sentence number two is in english too'
-];
-
-$results = [];
+$text = 'My sentence is in english';
 
 $detector = new LanguageDetector\LanguageDetector();
 
-foreach ($texts as $text)
-{
-  $results[] = $detector->evaluate($text)->getLanguage();
-}
+$language = $detector->evaluate($text)->getLanguage();
+
+echo $language; // Prints something like 'en'
 ```
 ________________________________________________________________________
 
