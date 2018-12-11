@@ -11,7 +11,7 @@ Table of contents
 =================
 - [Features](#features)
 - [Install](#install)
-- [Examples](#examples)
+- [Quick usage](#quick-usage)
   - [Detect language](#detect-language)
   - [Other methods](#other-methods)
 - [API Methods](#api-methods)
@@ -28,6 +28,7 @@ Features
 - More than 50 supported languages
 - Very fast, no database needed
 - Packaged with a 2MB dataset
+- Learning steps are already done, library is ready to use
 - Small code, small footprint
 - N-grams algorithm
 - Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3 and HHVM
@@ -42,24 +43,58 @@ composer require landrok/language-detector
 
 ________________________________________________________________________
 
-Examples
---------
+Quick usage
+-----------
 
 ### Detect language
 
-If you have a list of texts to detect, a possible way is to instanciate 
-once and then to evaluate your list.
+Instanciate a detector and pass a text.
+
+Then, you can get the detected language.
 
 ```php
 require_once 'vendor/autoload.php';
 
-$text = 'My sentence is in english';
+$text = 'My tailor is rich and Alison is in the kitchen with Bob.';
 
 $detector = new LanguageDetector\LanguageDetector();
 
 $language = $detector->evaluate($text)->getLanguage();
 
 echo $language; // Prints something like 'en'
+```
+
+Once it's instanciated, you can check for multiple texts.
+
+```php
+require_once 'vendor/autoload.php';
+
+// An array of texts to evaluate
+$texts = [
+    'My tailor is rich and Alison is in the kitchen with Bob.',
+    'Mon tailleur est riche et Alison est dans la cuisine avec Bob'
+];
+
+$detector = new LanguageDetector\LanguageDetector();
+
+foreach ($texts as $key => $text) {
+
+    $language = $detector->evaluate($text)->getLanguage();
+
+    echo sprintf(
+        "Text %d, language=%s\n",
+        $key,
+        $language
+    );
+}
+
+```
+
+Would output something like:
+
+```sh
+Text 0, language=en
+Text 1, language=fr
 ```
 ________________________________________________________________________
 
@@ -77,6 +112,8 @@ $languages = $detector->getSupportedLanguages();
 $scores = $detector->getScores();
 
 ```
+
+You can see documentation for these methods below.
 
 ________________________________________________________________________
 
