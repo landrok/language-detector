@@ -1,7 +1,7 @@
 {
     "name": "landrok/language-detector",
     "type": "library",
-    "version": "1.1.0",
+    "version": "1.2.0-dev",
     "description": "A PHP library for detecting languages",
     "keywords": ["language", "detector", "n-grams"],
     "homepage": "https://github.com/landrok/language-detector",
