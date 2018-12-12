@@ -34,6 +34,8 @@ class LanguageDetectionTest extends TestCase
             ['hu', 'Bothriechis schlegelii egy mérges kígyó faj található Közép- és Dél-Amerikában. Kicsi és fán, értekezés kígyók caractérisé meg az ő széles skáláját színváltozatban, valamint a szemöldök mérleg át a szemét. Ezek a leggyakoribb a tenyérnyi pitvipers Gyakran és jelen vannak állattani mutat. A pontos neve kitüntetéssel schlegelii német ornitológus, Hermann Schlegel. Nem alfaj Ares jelenleg RECONNU.', 'Should be Hungarian'],
             ['id', 'Hai, ini adalah sebuah kalimat di Indonesia', 'Should be Indonesian'],
             ['it', 'Salve, questo è una frase in italiano', 'Should be Italian'],
+            ['i-klingon', 'Qoy qeylIS puqloD', 'Should be Klingon'],
+            ['i-klingon', 'tlhIngan mu’qaDmey boghojbogh vIchov vaj cha’leS mu’qaD veS', 'Should be Klingon'],
             ['ja', 'こんにちは、これはスペイン語のフレーズです', 'Should be japanese'],
             ['kn', 'ಹಾಯ್, ಈ ಇಟಾಲಿಯನ್ ಒಂದು ವಾಕ್ಯ', 'Should be Kannada'],
             ['ko', '안녕하세요, 이탈리아의 문장입니다', 'Should be Korean'],
