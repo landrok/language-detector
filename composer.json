@@ -2,12 +2,13 @@
     "name": "landrok/language-detector",
     "type": "library",
     "version": "1.2.0-dev",
-    "description": "A PHP library for detecting languages",
+    "description": "A fast and reliable PHP library for detecting languages",
     "keywords": ["language", "detector", "n-grams"],
     "homepage": "https://github.com/landrok/language-detector",
     "license": "MIT",
     "require": {
         "php": "^7.0",
+        "ext-mbstring": "*",
         "webmozart/assert": "^1.2"
     },
     "require-dev": {
