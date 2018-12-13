@@ -92,7 +92,7 @@ class LanguageDetector
     /**
      * Gets the best scored language
      * 
-     * @return string ISO code
+     * @return string ISO code or an empty string
      * @throws \Exception if nothing has been evaluated
      * @api
      */
@@ -102,7 +102,7 @@ class LanguageDetector
             return '';
         }
 
-        return array_keys($this->scores)[0];
+        return key($this->scores);
     }
 
     /**
@@ -150,7 +150,7 @@ class LanguageDetector
      */
     public function __toString()
     {
-        
+        return $this->getLanguage();
     }
 
     /**

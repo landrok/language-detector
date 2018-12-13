@@ -96,6 +96,18 @@ Would output something like:
 Text 0, language=en
 Text 1, language=fr
 ```
+
+Additionally, you can use a _LanguageDetector_ instance as a string.
+
+```php
+require_once 'vendor/autoload.php';
+
+$text = 'My tailor is rich and Alison is in the kitchen with Bob.';
+
+$detector = new LanguageDetector\LanguageDetector();
+
+echo $detector->evaluate($text); // Prints something like 'en'
+```
 ________________________________________________________________________
 
 ### Other methods

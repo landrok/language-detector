@@ -88,6 +88,22 @@ class LanguageDetectionTest extends TestCase
     }
 
     /**
+     * Tests __toString()
+     */
+    public function testToString()
+    {
+        $this->assertEquals(
+            'en',
+            (new LanguageDetector())->evaluate('My tailor is rich and Alison is in the kitchen with Bob.')
+        );
+
+        $this->assertEquals(
+            '',
+            new LanguageDetector()
+        );
+    }
+
+    /**
      * getScores() method
      */
     public function testGetScores()
