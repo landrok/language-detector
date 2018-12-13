@@ -23,24 +23,4 @@ class LanguageDetectorExceptionTest extends TestCase
   {
     $this->evaluator->evaluate(array());
   }
-
-  /**
-   * getScores() must be preceded by an evaluation
-   * 
-   * @expectedException \Exception
-   */
-  public function testGetScoresWithNoEvaluatedString()
-  {
-    $this->evaluator->getScores();
-  }
-
-  /**
-   * getLanguage() must be preceded by an evaluation
-   *
-   * @expectedException \Exception
-   */
-  public function testGetLanguageWithNoEvaluatedString()
-  {
-    $this->evaluator->getLanguage();
-  }
 }
