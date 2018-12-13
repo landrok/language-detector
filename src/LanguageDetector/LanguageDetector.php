@@ -50,10 +50,6 @@ class LanguageDetector
         $this->datadir = null === $dir
             ? __DIR__ . '/subsets' : rtrim($dir, '/');
 
-        if (!extension_loaded('mbstring')) {
-            throw new Exception('Module mbstring must be loaded'); // @codeCoverageIgnore
-        }
-
         foreach (glob($this->datadir . '/*') as $file) {
             $this->subsets[basename($file)] = json_decode(
                 file_get_contents($file), true
