@@ -110,7 +110,7 @@ class LanguageDetector
      */
     public function getScores()
     {
-        if (!is_array($this->scores)) {
+        if (!count($this->scores)) {
             throw new Exception('No string has been evaluated');
         }
 

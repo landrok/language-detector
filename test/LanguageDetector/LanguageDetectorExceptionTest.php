@@ -23,4 +23,14 @@ class LanguageDetectorExceptionTest extends TestCase
     {
         $this->evaluator->evaluate(array());
     }
+
+    /**
+     * evaluate() only accepts strings
+     * 
+     * @expectedException \Exception
+     */
+    public function testGetScoreBeforeEvaluating()
+    {
+        $this->evaluator->getScores();
+    }
 }
