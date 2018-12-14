@@ -5,7 +5,8 @@ LanguageDetector
 [![Test Coverage](https://codeclimate.com/github/landrok/language-detector/badges/coverage.svg)](https://codeclimate.com/github/landrok/language-detector/coverage)
 [![Code Climate](https://codeclimate.com/github/landrok/language-detector/badges/gpa.svg)](https://codeclimate.com/github/landrok/language-detector)
 
-LanguageDetector is a PHP library that detects the language from texts.
+LanguageDetector is a PHP library that detects the language from a text 
+string.
 
 Table of contents
 =================
@@ -107,6 +108,7 @@ $text = 'My tailor is rich and Alison is in the kitchen with Bob.';
 $detector = new LanguageDetector\LanguageDetector();
 
 echo $detector->evaluate($text); // Prints something like 'en'
+echo $detector; // Prints something like 'en' after an evaluate()
 ```
 ________________________________________________________________________
 
@@ -141,16 +143,28 @@ It performs an evaluation on a given text.
 
 __Example__
 
+After an `evaluate()`, the result is stored and available for later use.
+
 ```php
 $detector->evaluate('My tailor is rich and Alison is in the kitchen with Bob.');
 
 // Then you have access to the detected language
 $detector->getLanguage(); // Returns 'en'
 ```
-You can make a one line call
+
+You can make a one line call.
 
 ```php
-$detector->evaluate('My tailor is rich and Alison is in the kitchen with Bob.')->getLanguage(); // Returns 'en'
+$detector->evaluate('My tailor is rich and Alison is in the kitchen with Bob.')
+         ->getLanguage(); // Returns 'en'
+```
+
+It's possible to directly print `evaluate()` output.
+
+```php
+// Returns 'en'
+echo $detector->evaluate('My tailor is rich and Alison is in the kitchen with Bob.');
+
 ```
 ________________________________________________________________________
 
