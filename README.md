@@ -20,7 +20,7 @@ Table of contents
   - [getScores()](#getscores)
   - [getSupportedLanguages()](#getsupportedlanguages)
   - [getText()](#gettext)
-  - [For one-liners only](for-one-liners-only)
+  - [For one-liners only](#for-one-liners-only)
 
 
 Features
@@ -226,7 +226,8 @@ ________________________________________________________________________
 
 __Type__ *\LanguageDetector\LanguageDetector*
 
-It performs an evaluation on a given text, in one line.
+With a static call on detect() method, you can perform an evaluation on 
+a given text, in one line.
 
 __Example__
 
