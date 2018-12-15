@@ -40,6 +40,11 @@ class LanguageDetector
     private $text = '';
 
     /**
+     * @var \LanguageDetector\LanguageDetector
+     */
+    private static $detector;
+
+    /**
      * Loads all subsets
      * 
      * @param  string $dir A directory where subsets are.
@@ -90,12 +95,15 @@ class LanguageDetector
      * 
      * @param  string $text
      * @return \LanguageDetector\LanguageDetector
+     * @api
      */
     public static function detect($text)
     {
-        $detector = new self;
+        if (is_null(self::$detector)) {
+            self::$detector = new self();
+        }
 
-        return $detector->evaluate($text);
+        return self::$detector->evaluate($text);
     }
 
     /**

@@ -14,19 +14,19 @@ Table of contents
 - [Install](#install)
 - [Quick usage](#quick-usage)
   - [Detect language](#detect-language)
-  - [Other methods](#other-methods)
 - [API Methods](#api-methods)
   - [evaluate()](#evaluate)
   - [getLanguage()](#getlanguage)
   - [getScores()](#getscores)
   - [getSupportedLanguages()](#getsupportedlanguages)
   - [getText()](#gettext)
+  - [For one-liners only](for-one-liners-only)
 
 
 Features
 --------
 
-- More than 50 supported languages
+- More than 50 supported languages, including Klingon
 - Very fast, no database needed
 - Packaged with a 2MB dataset
 - Learning steps are already done, library is ready to use
@@ -49,9 +49,7 @@ Quick usage
 
 ### Detect language
 
-Instanciate a detector and pass a text.
-
-Then, you can get the detected language.
+Instanciate a detector, pass a text and get the detected language.
 
 ```php
 require_once 'vendor/autoload.php';
@@ -65,7 +63,7 @@ $language = $detector->evaluate($text)->getLanguage();
 echo $language; // Prints something like 'en'
 ```
 
-Once it's instanciated, you can check for multiple texts.
+Once it's instanciated, you can test multiple texts.
 
 ```php
 require_once 'vendor/autoload.php';
@@ -110,30 +108,11 @@ $detector = new LanguageDetector\LanguageDetector();
 echo $detector->evaluate($text); // Prints something like 'en'
 echo $detector; // Prints something like 'en' after an evaluate()
 ```
-________________________________________________________________________
-
-### Other methods
-
-LanguageDetector has other information methods:
-
-```php
-[...]
-
-// Gets all supported languages
-$languages = $detector->getSupportedLanguages();
-
-// Gets all scores
-$scores = $detector->getScores();
-
-```
-
-You can see documentation for these methods below.
 
 ________________________________________________________________________
 
 API Methods
 -----------
-
 
 #### evaluate()
 
@@ -180,6 +159,7 @@ __Example__
 $detector->getLanguage(); // Returns 'en'
 ```
 ________________________________________________________________________
+
 #### getScores()
 
 __Type__ *array*
@@ -239,5 +219,45 @@ __Example__
 $detector->getText();
 
 // Returns 'My tailor is rich and Alison is in the kitchen with Bob.'
+```
+________________________________________________________________________
+
+#### For one-liners only
+
+__Type__ *\LanguageDetector\LanguageDetector*
+
+It performs an evaluation on a given text, in one line.
+
+__Example__
+
+```php
+
+echo LanguageDetector\LanguageDetector::detect(
+    'My tailor is rich and Alison is in the kitchen with Bob.'
+); // Returns 'en'
+```
+
+You can use all API methods.
+
+```php
+$detector = LanguageDetector\LanguageDetector::detect(
+    'My tailor is rich and Alison is in the kitchen with Bob.'
+);
+
+// en
+echo $detector; 
+
+// en
+echo $detector->getLanguage(); 
+
+// An array of all scores, see API method
+print_r($detector->getScores());
+
+// An array of all supported languages, see API method
+print_r($detector->getSupportedLanguages());
+
+// The last evaluated string
+echo $detector->getText();
+
 ```
 ________________________________________________________________________
