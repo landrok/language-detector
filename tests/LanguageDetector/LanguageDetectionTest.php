@@ -88,6 +88,20 @@ class LanguageDetectionTest extends TestCase
     }
 
     /**
+     * Tests quality of the language detection with static calls
+     * 
+     * @dataProvider getLanguageDetectionScenarios
+     */
+    public function testStaticDetectionReliability($expected, $string, $message)
+    {
+        $this->assertEquals(
+            $expected,
+            LanguageDetector::detect($string),
+            $message
+        );
+    }
+
+    /**
      * Tests __toString()
      */
     public function testToString()

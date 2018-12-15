@@ -86,6 +86,19 @@ class LanguageDetector
     }
 
     /**
+     * Static call for oneliners
+     * 
+     * @param  string $text
+     * @return \LanguageDetector\LanguageDetector
+     */
+    public static function detect($text)
+    {
+        $detector = new self;
+
+        return $detector->evaluate($text);
+    }
+
+    /**
      * Gets the best scored language
      * 
      * @return string ISO code or an empty string
