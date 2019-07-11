@@ -5,7 +5,7 @@ LanguageDetector
 [![Test Coverage](https://codeclimate.com/github/landrok/language-detector/badges/coverage.svg)](https://codeclimate.com/github/landrok/language-detector/coverage)
 [![Code Climate](https://codeclimate.com/github/landrok/language-detector/badges/gpa.svg)](https://codeclimate.com/github/landrok/language-detector)
 
-LanguageDetector is a PHP library that detects the language from a text 
+LanguageDetector is a PHP library that detects the language from a text
 string.
 
 Table of contents
@@ -32,7 +32,7 @@ Features
 - Learning steps are already done, library is ready to use
 - Small code, small footprint
 - N-grams algorithm
-- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3 and HHVM
+- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4 and HHVM
 
 
 Install
@@ -226,7 +226,7 @@ ________________________________________________________________________
 
 __Type__ *\LanguageDetector\LanguageDetector*
 
-With a static call on detect() method, you can perform an evaluation on 
+With a static call on detect() method, you can perform an evaluation on
 a given text, in one line.
 
 __Example__
@@ -246,10 +246,10 @@ $detector = LanguageDetector\LanguageDetector::detect(
 );
 
 // en
-echo $detector; 
+echo $detector;
 
 // en
-echo $detector->getLanguage(); 
+echo $detector->getLanguage();
 
 // An array of all scores, see API method
 print_r($detector->getScores());
