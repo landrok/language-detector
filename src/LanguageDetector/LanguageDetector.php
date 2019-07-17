@@ -48,7 +48,6 @@ class LanguageDetector
      * Loads all subsets
      * 
      * @param  string $dir A directory where subsets are.
-     * @throws \Exception if mbstring is not loaded
      */
     public function __construct($dir = null)
     {
@@ -110,7 +109,7 @@ class LanguageDetector
      * Gets the best scored language
      * 
      * @return string ISO code or an empty string
-     * @throws \Exception if nothing has been evaluated
+     *                if nothing has been evaluated
      * @api
      */
     public function getLanguage()
