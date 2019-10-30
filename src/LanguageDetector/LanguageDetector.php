@@ -20,9 +20,9 @@ use Webmozart\Assert\Assert;
 class LanguageDetector
 {
     /**
-     * @var array
+     * @var \LanguageDetector\Language[]
      */
-    private $subsets = [];
+    private $languages = [];
 
     /**
      * @var string
@@ -55,8 +55,10 @@ class LanguageDetector
             ? __DIR__ . '/subsets' : rtrim($dir, '/');
 
         foreach (glob($this->datadir . '/*') as $file) {
-            $this->subsets[basename($file)] = json_decode(
-                file_get_contents($file), true
+            $this->languages[basename($file)] = new Language(
+                json_decode(
+                    file_get_contents($file), true
+                )
             );
         }
     }
@@ -82,7 +84,7 @@ class LanguageDetector
 
         $this->text = $text;
 
-        array_walk($this->subsets, $this->calculate($this->chunk()));
+        array_walk($this->languages, $this->calculate($this->chunk()));
 
         arsort($this->scores);
 
@@ -145,7 +147,7 @@ class LanguageDetector
      */
     public function getSupportedLanguages()
     {
-        return array_keys($this->subsets);
+        return array_keys($this->languages);
     }
 
     /**
@@ -177,15 +179,15 @@ class LanguageDetector
      */
     private function calculate(array $chunks)
     {
-        return function($data, $lang) use ($chunks) {
-            $this->scores[$lang] = 
+        return function($language, $code) use ($chunks) {
+            $this->scores[$code] = 
                 array_sum(
                     array_intersect_key(
-                        $data['freq'],
+                        $language->getFreq(),
                         array_flip($chunks)
                     )
                 )
-                / array_sum($data['n_words']);
+                / array_sum($language->getNWords());
         };
     }
 
