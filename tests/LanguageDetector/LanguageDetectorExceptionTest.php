@@ -4,33 +4,35 @@ namespace LanguageDetectorTest;
 
 use LanguageDetector\LanguageDetector;
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
+use Exception;
 
 class LanguageDetectorExceptionTest extends TestCase
 {
     protected $evaluator;
-    
-    protected function setUp()
+
+    protected function setUp() : void
     {
         $this->evaluator = new LanguageDetector();
     }
 
     /**
      * evaluate() only accepts strings
-     * 
-     * @expectedException \InvalidArgumentException
      */
     public function testEvaluateAnUnexpectedType()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $this->evaluator->evaluate(array());
     }
 
     /**
      * evaluate() only accepts strings
-     * 
-     * @expectedException \Exception
      */
     public function testGetScoreBeforeEvaluating()
     {
+        $this->expectException(Exception::class);
+
         $this->evaluator->getScores();
     }
 }
