@@ -100,18 +100,28 @@ class LanguageDetector
 
     /**
      * Gets the best scored language
-     * 
-     * @return string ISO code or an empty string
-     *                if nothing has been evaluated
+     *
+     * @param  string $code
+     * @return \LanguageDetector\Language A Language object related to
+     *                                    ISO code or best scored one if
+     *                                    $code is empty.
+     * @throws \InvalidArgumentException When ISO code has no related
+     *                                   Language definition.
      * @api
      */
-    public function getLanguage()
+    public function getLanguage($code = null)
     {
         if (!count($this->scores)) {
             return '';
         }
 
-        return key($this->scores);
+        if (is_null($code)) {
+            $code = key($this->scores);
+        }
+
+        Assert::keyExists($this->languages, $code);
+
+        return $this->languages[$code];
     }
 
     /**
@@ -159,7 +169,7 @@ class LanguageDetector
      */
     public function __toString()
     {
-        return $this->getLanguage();
+        return (string)$this->getLanguage();
     }
 
     /**

@@ -36,7 +36,7 @@ class Language
     private $loaded;
 
     /**
-     * Loads a subset
+     * Config a subset file to load
      * 
      * @param  string $file File which contains subset data.
      */
@@ -50,10 +50,14 @@ class Language
     /**
      * Load subset data
      *
-     * @return $this
+     * @throws \InvalidArgumentException  if file does not exist
+     * @return self
      */
     public function load()
     {
+        Assert::fileExists($this->file);
+        Assert::file($this->file);
+
         $subset = json_decode(
             file_get_contents($this->file),
             true
@@ -65,6 +69,8 @@ class Language
 
         $this->subset = $subset;
         $this->loaded = true;
+
+        return $this;
     }
 
     /**
@@ -93,5 +99,15 @@ class Language
         }
 
         return $this->subset['n_words'];
+    }
+
+    /**
+     * Get language code
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->subset['name'];
     }
 }
