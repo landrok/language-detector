@@ -24,17 +24,47 @@ class Language
     private $subset = [];
 
     /**
+     * @var string
+     */
+    private $file;
+
+    /**
+     * Have subset data been loaded ?
+     *
+     * @var bool
+     */
+    private $loaded;
+
+    /**
      * Loads a subset
      * 
-     * @param  string $dir A directory where subsets are.
+     * @param  string $file File which contains subset data.
      */
-    public function __construct(array $subset)
+    public function __construct($file)
     {
+        Assert::string($file);
+
+        $this->file = $file;        
+    }
+
+    /**
+     * Load subset data
+     *
+     * @return $this
+     */
+    public function load()
+    {
+        $subset = json_decode(
+            file_get_contents($this->file),
+            true
+        );
+
         Assert::keyExists($subset, 'freq');
         Assert::keyExists($subset, 'n_words');
         Assert::keyExists($subset, 'name');
 
         $this->subset = $subset;
+        $this->loaded = true;
     }
 
     /**
@@ -44,6 +74,10 @@ class Language
      */
     public function getFreq()
     {
+        if (!$this->loaded) {
+            $this->load();
+        }
+
         return $this->subset['freq'];
     }
 
@@ -54,6 +88,10 @@ class Language
      */
     public function getNWords()
     {
+        if (!$this->loaded) {
+            $this->load();
+        }
+
         return $this->subset['n_words'];
     }
 }

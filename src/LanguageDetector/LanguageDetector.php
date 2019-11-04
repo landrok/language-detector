@@ -25,11 +25,6 @@ class LanguageDetector
     private $languages = [];
 
     /**
-     * @var string
-     */
-    private $datadir;
-
-    /**
      * @var array
      */
     private $scores = [];
@@ -45,21 +40,17 @@ class LanguageDetector
     private static $detector;
 
     /**
-     * Loads all subsets
+     * Configure all subset languages
      * 
      * @param  string $dir A directory where subsets are.
      */
     public function __construct($dir = null)
     {
-        $this->datadir = null === $dir
+        $datadir = null === $dir
             ? __DIR__ . '/subsets' : rtrim($dir, '/');
 
-        foreach (glob($this->datadir . '/*') as $file) {
-            $this->languages[basename($file)] = new Language(
-                json_decode(
-                    file_get_contents($file), true
-                )
-            );
+        foreach (glob($datadir . '/*') as $file) {
+            $this->languages[basename($file)] = new Language($file);
         }
     }
 
