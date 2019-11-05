@@ -77,7 +77,7 @@ class LanguageSubsetTest extends TestCase
      * 
      * @dataProvider getLanguageSubsetScenarios
      */
-    public function testDetectionReliability($code, $expected = null)
+    public function testSubsetContents($code, $expected = null)
     {
         if (!is_null($expected)) {
             if ($expected == InvalidArgumentException::class) {
@@ -94,6 +94,36 @@ class LanguageSubsetTest extends TestCase
         $this->assertGreaterThan(
             0,
             array_sum($language->getNWords())
+        );
+    }
+
+    /**
+     * Tests that getCode return s a valid code
+     * 
+     * @dataProvider getLanguageSubsetScenarios
+     */
+    public function testSubsetGetCode($code, $expected = null)
+    {
+        if (!is_null($expected)) {
+            if ($expected == InvalidArgumentException::class) {
+                $this->expectException(InvalidArgumentException::class);
+            }
+        }
+
+        $language = new Language(
+            dirname(dirname(__DIR__))
+            . '/src/LanguageDetector/subsets/'
+            . $code
+        );
+
+        $this->assertEquals(
+            $code,
+            $language->getCode()
+        );
+
+        $this->assertEquals(
+            $code,
+            (string)$language
         );
     }
 }

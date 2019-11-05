@@ -102,12 +102,26 @@ class Language
     }
 
     /**
+     * Get language ISO code
+     * 
+     * @return array
+     */
+    public function getCode()
+    {
+        if (!$this->loaded) {
+            $this->load();
+        }
+
+        return $this->subset['name'];
+    }
+
+    /**
      * Get language code
      * 
      * @return string
      */
     public function __toString()
     {
-        return $this->subset['name'];
+        return $this->getCode();
     }
 }
