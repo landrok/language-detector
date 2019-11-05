@@ -9,13 +9,6 @@ use Exception;
 
 class LanguageDetectorExceptionTest extends TestCase
 {
-    protected $evaluator;
-
-    protected function setUp() : void
-    {
-        $this->evaluator = new LanguageDetector();
-    }
-
     /**
      * evaluate() only accepts strings
      */
@@ -23,7 +16,8 @@ class LanguageDetectorExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $this->evaluator->evaluate(array());
+        $evaluator = new LanguageDetector();
+        $evaluator->evaluate(array());
     }
 
     /**
@@ -33,6 +27,7 @@ class LanguageDetectorExceptionTest extends TestCase
     {
         $this->expectException(Exception::class);
 
-        $this->evaluator->getScores();
+        $evaluator = new LanguageDetector();
+        $evaluator->getScores();
     }
 }
