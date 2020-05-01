@@ -21,19 +21,19 @@ class Language
     /**
      * @var array
      */
-    private $subset = [];
+    protected $subset = [];
 
     /**
      * @var string
      */
-    private $file;
+    protected $file;
 
     /**
-     * Have subset data been loaded ?
+     * Is subset data loaded ?
      *
      * @var bool
      */
-    private $loaded;
+    protected $loaded;
 
     /**
      * Config a subset file to load
@@ -53,7 +53,7 @@ class Language
      * @throws \InvalidArgumentException  if file does not exist
      * @return self
      */
-    public function load()
+    public function load(): self
     {
         Assert::fileExists($this->file);
         Assert::file($this->file);
@@ -78,7 +78,7 @@ class Language
      * 
      * @return array
      */
-    public function getFreq()
+    public function getFreq(): array
     {
         if (!$this->loaded) {
             $this->load();
@@ -92,7 +92,7 @@ class Language
      * 
      * @return array
      */
-    public function getNWords()
+    public function getNWords(): array
     {
         if (!$this->loaded) {
             $this->load();
@@ -104,9 +104,9 @@ class Language
     /**
      * Get language ISO code
      * 
-     * @return array
+     * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         if (!$this->loaded) {
             $this->load();
@@ -120,7 +120,7 @@ class Language
      * 
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getCode();
     }

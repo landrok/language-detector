@@ -62,7 +62,7 @@ class LanguageDetector
      * @throws \InvalidArgumentException if $text is not a string
      * @api
      */
-    public function evaluate($text)
+    public function evaluate($text): self
     {
         Assert::string(
             $text,
@@ -89,7 +89,7 @@ class LanguageDetector
      * @return \LanguageDetector\LanguageDetector
      * @api
      */
-    public static function detect($text)
+    public static function detect($text): self
     {
         if (is_null(self::$detector)) {
             self::$detector = new self();
@@ -109,10 +109,10 @@ class LanguageDetector
      *                                   Language definition.
      * @api
      */
-    public function getLanguage($code = null)
+    public function getLanguage($code = null): Language
     {
         if (!count($this->scores)) {
-            return '';
+            return new EmptyLanguage();
         }
 
         if (is_null($code)) {
@@ -131,7 +131,7 @@ class LanguageDetector
      * @throws \Exception if nothing has been evaluated
      * @api
      */
-    public function getScores()
+    public function getScores(): array
     {
         if (!count($this->scores)) {
             throw new Exception('No string has been evaluated');
@@ -146,7 +146,7 @@ class LanguageDetector
      * @return array An array of ISO codes
      * @api
      */
-    public function getSupportedLanguages()
+    public function getSupportedLanguages(): array
     {
         return array_keys($this->languages);
     }
@@ -157,7 +157,7 @@ class LanguageDetector
      * @return string
      * @api
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -167,7 +167,7 @@ class LanguageDetector
      * 
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->getLanguage();
     }
@@ -178,7 +178,7 @@ class LanguageDetector
      * @param  array $chunks
      * @return \Closure An evaluator
      */
-    private function calculate(array $chunks)
+    private function calculate(array $chunks): callable
     {
         return function($language, $code) use ($chunks) {
             $this->scores[$code] = 
@@ -197,7 +197,7 @@ class LanguageDetector
      * 
      * @return array
      */
-    private function chunk()
+    private function chunk(): array
     {
         $chunks = [];
         $len = mb_strlen($this->text);
