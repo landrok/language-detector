@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php" colors="true">
-<testsuites>
-  <testsuite name="LanguageDetector Test Suite">
-    <directory>./tests/LanguageDetector/</directory>
-  </testsuite>
-</testsuites>
-
-<logging>
-    <log type="coverage-clover" target="build/logs/clover.xml"/>
-</logging>
-
-<filter>
-  <whitelist processUncoveredFilesFromWhitelist="true">
-    <directory suffix=".php">src</directory>
-  </whitelist>
-</filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <report>
+      <clover outputFile="build/logs/clover.xml"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="LanguageDetector Test Suite">
+      <directory>./tests/LanguageDetector/</directory>
+    </testsuite>
+  </testsuites>
+  <logging/>
 </phpunit>
