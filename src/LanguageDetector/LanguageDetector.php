@@ -43,14 +43,17 @@ class LanguageDetector
      * Configure all subset languages
      * 
      * @param  string $dir A directory where subsets are.
+     * @param  array $languages Language codes to load models for. By default, all languages are loaded.
      */
-    public function __construct($dir = null)
+    public function __construct($dir = null, $languages = null)
     {
         $datadir = null === $dir
             ? __DIR__ . '/subsets' : rtrim($dir, '/');
 
         foreach (glob($datadir . '/*') as $file) {
-            $this->languages[basename($file)] = new Language($file);
+            if (! $languages || in_array(basename($file), $languages)) {
+                $this->languages[basename($file)] = new Language($file);
+            }
         }
     }
 

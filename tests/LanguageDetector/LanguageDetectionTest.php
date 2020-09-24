@@ -157,4 +157,32 @@ class LanguageDetectionTest extends TestCase
             $detector->getText()
         );
     }
+
+    /**
+     * __construct() method
+     */
+    public function testLanguageRestriction()
+    {
+        $text = 'My tailor is rich and Alison is in the kitchen with Bob.';
+
+        $detector = new LanguageDetector(null, ['da', 'no', 'sv']);
+
+        $detector->evaluate($text);
+
+        // After evaluation
+        $this->assertNotEquals(
+            'en',
+            $detector->getLanguage()
+        );
+
+        $detector = new LanguageDetector(null, ['da', 'no', 'sv', 'en']);
+
+        $detector->evaluate($text);
+
+        // After evaluation
+        $this->assertEquals(
+            'en',
+            $detector->getLanguage()
+        );
+    }
 }
