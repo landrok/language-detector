@@ -7,7 +7,7 @@
     "homepage": "https://github.com/landrok/language-detector",
     "license": "MIT",
     "require": {
-        "php": "^7.0",
+        "php": ">=7.0",
         "ext-mbstring": "*",
         "webmozart/assert": "^1.2"
     },
