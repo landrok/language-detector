@@ -3,6 +3,7 @@
 namespace LanguageDetectorTest;
 
 use LanguageDetector\Language;
+use LanguageDetector\LanguageDetector;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 
@@ -74,7 +75,7 @@ class LanguageSubsetTest extends TestCase
 
     /**
      * Tests that subset are loaded
-     * 
+     *
      * @dataProvider getLanguageSubsetScenarios
      */
     public function testSubsetContents($code, $expected = null)
@@ -99,7 +100,7 @@ class LanguageSubsetTest extends TestCase
 
     /**
      * Tests that getCode return s a valid code
-     * 
+     *
      * @dataProvider getLanguageSubsetScenarios
      */
     public function testSubsetGetCode($code, $expected = null)
@@ -124,6 +125,28 @@ class LanguageSubsetTest extends TestCase
         $this->assertEquals(
             $code,
             (string)$language
+        );
+    }
+
+    /**
+     * Tests that a limited number of subsets has been loaded
+     */
+    public function testLimitLoadedSubsets()
+    {
+        $subsets = ['da', 'en', 'no', 'sv'];
+
+        $language = new LanguageDetector(null, $subsets);
+
+        $this->assertEquals(
+            $subsets,
+            $language->getLanguages()
+        );
+
+        $language = LanguageDetector::detect('ok', $subsets);
+
+        $this->assertEquals(
+            $subsets,
+            $language->getLanguages()
         );
     }
 }

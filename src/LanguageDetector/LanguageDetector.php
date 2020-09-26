@@ -16,7 +16,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * LanguageDetector is the entry point for the detecting process.
- */ 
+ */
 class LanguageDetector
 {
     /**
@@ -41,17 +41,19 @@ class LanguageDetector
 
     /**
      * Configure all subset languages
-     * 
+     *
      * @param  string $dir A directory where subsets are.
      * @param  array $languages Language codes to load models for. By default, all languages are loaded.
      */
-    public function __construct($dir = null, $languages = null)
+    public function __construct($dir = null, array $languages = [])
     {
         $datadir = null === $dir
             ? __DIR__ . '/subsets' : rtrim($dir, '/');
 
         foreach (glob($datadir . '/*') as $file) {
-            if (! $languages || in_array(basename($file), $languages)) {
+            if (!count($languages)
+                || in_array(basename($file), $languages)
+            ) {
                 $this->languages[basename($file)] = new Language($file);
             }
         }
@@ -59,7 +61,7 @@ class LanguageDetector
 
     /**
      * Evaluates that a string matches a language
-     * 
+     *
      * @param  string $text
      * @return \LanguageDetector\LanguageDetector
      * @throws \InvalidArgumentException if $text is not a string
@@ -87,15 +89,25 @@ class LanguageDetector
 
     /**
      * Static call for oneliners
-     * 
+     *
      * @param  string $text
+     * @param  array $languages Language codes to load models for. By
+     *         default, all languages are loaded.
      * @return \LanguageDetector\LanguageDetector
      * @api
      */
-    public static function detect($text): self
+    public static function detect($text, array $languages = []): self
     {
-        if (is_null(self::$detector)) {
-            self::$detector = new self();
+        // All specified models have been loaded
+        $diff = count($languages)
+            ? array_diff(
+                        self::$detector->getLanguages(),
+                        $languages
+                    )
+            : [];
+
+        if (is_null(self::$detector) || count($diff)) {
+            self::$detector = new self(null, $languages);
         }
 
         return self::$detector->evaluate($text);
@@ -127,9 +139,20 @@ class LanguageDetector
         return $this->languages[$code];
     }
 
+   /**
+     * Get loaded languages
+     *
+     * @return []string An array of ISO codes
+     * @api
+     */
+    public function getLanguages(): array
+    {
+        return array_keys($this->languages);
+    }
+
     /**
      * Get all scored subsets
-     * 
+     *
      * @return array An array of ISO codes => scores
      * @throws \Exception if nothing has been evaluated
      * @api
@@ -145,7 +168,7 @@ class LanguageDetector
 
     /**
      * Get all supported languages
-     * 
+     *
      * @return array An array of ISO codes
      * @api
      */
@@ -156,7 +179,7 @@ class LanguageDetector
 
     /**
      * Get evaluated text
-     * 
+     *
      * @return string
      * @api
      */
@@ -167,7 +190,7 @@ class LanguageDetector
 
     /**
      * Get best result when detector is used as a string
-     * 
+     *
      * @return string
      */
     public function __toString(): string
@@ -177,14 +200,14 @@ class LanguageDetector
 
     /**
      * Evaluate probabilities for one language
-     * 
+     *
      * @param  array $chunks
      * @return \Closure An evaluator
      */
     private function calculate(array $chunks): callable
     {
         return function($language, $code) use ($chunks) {
-            $this->scores[$code] = 
+            $this->scores[$code] =
                 array_sum(
                     array_intersect_key(
                         $language->getFreq(),
@@ -197,7 +220,7 @@ class LanguageDetector
 
     /**
      * Chunk a text
-     * 
+     *
      * @return array
      */
     private function chunk(): array
@@ -205,7 +228,7 @@ class LanguageDetector
         $chunks = [];
         $len = mb_strlen($this->text);
 
-        // Chunk sizes 
+        // Chunk sizes
         for ($i = 0; $i < 3; $i++) {
             for ($j = 0; $j < $len; $j++) {
                 if ($len > $j + $i) {

@@ -17,10 +17,13 @@ Table of contents
 - [API Methods](#api-methods)
   - [evaluate()](#evaluate)
   - [getLanguage()](#getlanguage)
+  - [getLanguages()](#getLanguages)
   - [getScores()](#getscores)
   - [getSupportedLanguages()](#getsupportedlanguages)
   - [getText()](#gettext)
+  - [options](#options)
   - [For one-liners only](#for-one-liners-only)
+
 
 
 Features
@@ -32,7 +35,7 @@ Features
 - Learning steps are already done, library is ready to use
 - Small code, small footprint
 - N-grams algorithm
-- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4 and HHVM
+- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0 and HHVM
 
 
 Install
@@ -160,6 +163,19 @@ $detector->getLanguage(); // Returns 'en'
 ```
 ________________________________________________________________________
 
+#### getLanguages()
+
+__Type__ *array*
+
+A list of loaded models that will be evaluated.
+
+__Example__
+
+```php
+$detector->getLanguages(); // Returns something like ['de', 'en', 'fr']
+```
+________________________________________________________________________
+
 #### getScores()
 
 __Type__ *array*
@@ -222,6 +238,26 @@ $detector->getText();
 ```
 ________________________________________________________________________
 
+#### Options
+
+__Type__ *\LanguageDetector\LanguageDetector*
+
+For even better performance, loaded models can be specified explicitly.
+
+__Example__
+
+```php
+
+$text = 'My tailor is rich and Alison is in the kitchen with Bob.';
+
+$detector = new LanguageDetector(null, ['en', 'fr', 'de']);
+
+$language = $detector->evaluate($text);
+
+echo $language; // Prints something like 'en'
+```
+________________________________________________________________________
+
 #### For one-liners only
 
 __Type__ *\LanguageDetector\LanguageDetector*
@@ -259,6 +295,12 @@ print_r($detector->getSupportedLanguages());
 
 // The last evaluated string
 echo $detector->getText();
+
+// Limit loaded languages for even better performance
+echo LanguageDetector\LanguageDetector::detect(
+    'My tailor is rich and Alison is in the kitchen with Bob.',
+    ['en', 'de', 'fr', 'es']
+); // en
 
 ```
 ________________________________________________________________________
