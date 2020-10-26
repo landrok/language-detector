@@ -6,6 +6,7 @@ use LanguageDetector\LanguageDetector;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use Exception;
+use TypeError;
 
 class LanguageDetectorExceptionTest extends TestCase
 {
@@ -14,7 +15,7 @@ class LanguageDetectorExceptionTest extends TestCase
      */
     public function testEvaluateAnUnexpectedType()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
 
         $evaluator = new LanguageDetector();
         $evaluator->evaluate(array());
