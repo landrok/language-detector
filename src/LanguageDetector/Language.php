@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the LanguageDetector package.
  *
@@ -40,10 +42,8 @@ class Language
      * 
      * @param  string $file File which contains subset data.
      */
-    public function __construct($file)
+    public function __construct(string $file)
     {
-        Assert::string($file);
-
         $this->file = $file;        
     }
 
@@ -51,7 +51,6 @@ class Language
      * Load subset data
      *
      * @throws \InvalidArgumentException  if file does not exist
-     * @return self
      */
     public function load(): self
     {
@@ -75,8 +74,6 @@ class Language
 
     /**
      * Get frequencies by ngrams
-     * 
-     * @return array
      */
     public function getFreq(): array
     {
@@ -89,8 +86,6 @@ class Language
 
     /**
      * Get total numbers of occurences by ngram sizes
-     * 
-     * @return array
      */
     public function getNWords(): array
     {
@@ -103,8 +98,6 @@ class Language
 
     /**
      * Get language ISO code
-     * 
-     * @return string
      */
     public function getCode(): string
     {
@@ -117,8 +110,6 @@ class Language
 
     /**
      * Get language code
-     * 
-     * @return string
      */
     public function __toString(): string
     {
