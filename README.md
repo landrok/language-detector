@@ -36,6 +36,7 @@ Features
 - Small code, small footprint
 - N-grams algorithm
 - Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0 and HHVM
+  The latest release 1.3.x only supports PHP>=7.2
 
 
 Install
