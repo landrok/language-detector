@@ -93,14 +93,17 @@ class LanguageDetector
      */
     public static function detect(string $text, array $languages = []): self
     {
-        // All specified models have been loaded
-        $diff = count($languages)
-            ? array_diff(
-                        self::$detector->getLanguages(),
-                        $languages
-                    )
+        // Current loaded models
+        $current = !is_null(self::$detector)
+            ? self::$detector->getLanguages()
             : [];
 
+        // Differential between currently loaded and specified models
+        $diff = count($languages)
+            ? array_diff($current, $languages)
+            : [];
+
+        // Specified models need to be reloaded
         if (is_null(self::$detector) || count($diff)) {
             self::$detector = new self(null, $languages);
         }

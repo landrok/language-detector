@@ -8,6 +8,66 @@ use PHPUnit\Framework\TestCase;
 class LanguageDetectionTest extends TestCase
 {
     /**
+     * @var array
+     */
+    protected $availableLanguages = [
+        'th',
+        'mr',
+        'sk',
+        'pa',
+        'ru',
+        'el',
+        'ar',
+        'ta',
+        'hr',
+        'sq',
+        'ja',
+        'cs',
+        'bn',
+        'tl',
+        'i-klingon',
+        'it',
+        'ro',
+        'lt',
+        'hi',
+        'id',
+        'bg',
+        'lv',
+        'gu',
+        'he',
+        'en',
+        'vi',
+        'sv',
+        'ne',
+        'et',
+        'hu',
+        'af',
+        'pt',
+        'de',
+        'es',
+        'zh-tw',
+        'mk',
+        'pl',
+        'sl',
+        'so',
+        'zh-cn',
+        'uk',
+        'nl',
+        'no',
+        'ur',
+        'da',
+        'kn',
+        'ko',
+        'te',
+        'fr',
+        'sw',
+        'ml',
+        'fi',
+        'tr',
+        'fa',
+    ];
+
+    /**
      * Valid scenarios provider
      */
     public function getLanguageDetectionScenarios()
@@ -159,7 +219,7 @@ class LanguageDetectionTest extends TestCase
     }
 
     /**
-     * __construct() method
+     * _Tests _construct() method
      */
     public function testLanguageRestriction()
     {
@@ -184,5 +244,50 @@ class LanguageDetectionTest extends TestCase
             'en',
             $detector->getLanguage()
         );
+    }
+
+    /**
+     * Tests quality of the language detection with static calls and
+     * a restriction in tested subsets.
+     *
+     * - Randomly pick between 5 and 10 subsets
+     * - Add the good one
+     * 
+     * @dataProvider getLanguageDetectionScenarios
+     */
+    public function testStaticDetectionReliabilityWithRestrictedNumberOfSubsets($expected, $string, $message)
+    {
+        // Prepare a random set of languages
+        $numberOfSubsets = rand(5, 10);
+        $allowed = [$expected];
+
+        while (count($allowed) < $numberOfSubsets) {
+            $lang = $this->availableLanguages[ array_rand($this->availableLanguages) ];
+            if (!in_array($lang, $allowed)) {
+                array_push($allowed, $lang);
+            }
+        }
+        sort($allowed);
+
+        $detector = LanguageDetector::detect($string, $allowed);
+
+        // Right language detected
+        $this->assertEquals(
+            $expected,
+            $detector,
+            $message
+        );
+
+        // Remove not allowed language
+        if ($allowed[0] === '') {
+            array_shift($allowed);
+        }
+
+        // Right dataset
+        $this->assertEquals(
+            $allowed,
+            $detector->getLanguages(),
+            $message
+        );        
     }
 }
