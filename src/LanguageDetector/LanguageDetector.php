@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the LanguageDetector package.
@@ -19,15 +19,15 @@ use Webmozart\Assert\Assert;
 /**
  * LanguageDetector is the entry point for the detecting process.
  */
-class LanguageDetector
+final class LanguageDetector
 {
     /**
-     * @var \LanguageDetector\Language[]
+     * @var array<Language>
      */
     private $languages = [];
 
     /**
-     * @var array
+     * @var array<string,float>
      */
     private $scores = [];
 
@@ -37,7 +37,7 @@ class LanguageDetector
     private $text = '';
 
     /**
-     * @var \LanguageDetector\LanguageDetector
+     * @var LanguageDetector
      */
     private static $detector;
 
@@ -45,15 +45,16 @@ class LanguageDetector
      * Configure all subset languages
      *
      * @param  string $dir A directory where subsets are.
-     * @param  array $languages Language codes to load models for. By default, all languages are loaded.
+     * @param  array<string> $languages Language codes to load models for. By default, all languages are loaded.
      */
-    public function __construct(string $dir = null, array $languages = [])
+    public function __construct(?string $dir = null, array $languages = [])
     {
-        $datadir = null === $dir
-            ? __DIR__ . '/subsets' : rtrim($dir, '/');
+        $datadir = is_null($dir)
+            ? __DIR__ . '/subsets'
+            : rtrim($dir, '/');
 
         foreach (glob($datadir . '/*') as $file) {
-            if (!count($languages)
+            if (! count($languages)
                 || in_array(basename($file), $languages)
             ) {
                 $this->languages[basename($file)] = new Language($file);
@@ -69,7 +70,7 @@ class LanguageDetector
      */
     public function evaluate(string $text): self
     {
-        if (empty($text)) {
+        if ($text === '') {
             return $this;
         }
 
@@ -85,7 +86,6 @@ class LanguageDetector
     /**
      * Static call for oneliners
      *
-     * @param  string $text
      * @param  array $languages Language codes to load models for. By
      *         default, all languages are loaded.
      * @return \LanguageDetector\LanguageDetector
@@ -94,7 +94,7 @@ class LanguageDetector
     public static function detect(string $text, array $languages = []): self
     {
         // Current loaded models
-        $current = !is_null(self::$detector)
+        $current = ! is_null(self::$detector)
             ? self::$detector->getLanguages()
             : [];
 
@@ -121,9 +121,9 @@ class LanguageDetector
      *                                   Language definition.
      * @api
      */
-    public function getLanguage(string $code = null): Language
+    public function getLanguage(?string $code = null): Language
     {
-        if (!count($this->scores)) {
+        if (! count($this->scores)) {
             return new EmptyLanguage();
         }
 
@@ -136,10 +136,10 @@ class LanguageDetector
         return $this->languages[$code];
     }
 
-   /**
+    /**
      * Get loaded languages
      *
-     * @return []string An array of ISO codes
+     * @return array<string> An array of ISO codes
      * @api
      */
     public function getLanguages(): array
@@ -150,13 +150,13 @@ class LanguageDetector
     /**
      * Get all scored subsets
      *
-     * @return array An array of ISO codes => scores
+     * @return array<string,float> An array of ISO codes => scores
      * @throws \Exception if nothing has been evaluated
      * @api
      */
     public function getScores(): array
     {
-        if (!count($this->scores)) {
+        if (! count($this->scores)) {
             throw new Exception('No string has been evaluated');
         }
 
@@ -166,7 +166,7 @@ class LanguageDetector
     /**
      * Get all supported languages
      *
-     * @return array An array of ISO codes
+     * @return array<string> An array of ISO codes
      * @api
      */
     public function getSupportedLanguages(): array
@@ -188,16 +188,16 @@ class LanguageDetector
      */
     public function __toString(): string
     {
-        return (string)$this->getLanguage();
+        return (string) $this->getLanguage();
     }
 
     /**
-     * Get a callable evaluator that will calculate probabilities 
+     * Get a callable evaluator that will calculate probabilities
      * for one language.
      */
     private function calculate(array $chunks): callable
     {
-        return function($language, $code) use ($chunks) {
+        return function ($language, $code) use ($chunks): void {
             $this->scores[$code] =
                 array_sum(
                     array_intersect_key(

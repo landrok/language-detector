@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the LanguageDetector package.
@@ -15,16 +15,16 @@ namespace LanguageDetector;
 
 /**
  * Empty language
- */ 
-class EmptyLanguage extends Language
+ */
+final class EmptyLanguage extends Language
 {
     /**
      * Emulate default values for an empty language
      */
     public function __construct()
     {
-        $this->file   = null; 
-        $this->loaded = true; 
+        $this->file   = null;
+        $this->loaded = true;
         $this->subset = [
             'freq'    => [],
             'n_words' => [],

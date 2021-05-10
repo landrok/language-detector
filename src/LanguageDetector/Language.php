@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the LanguageDetector package.
@@ -17,7 +17,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * Language binds a subset
- */ 
+ */
 class Language
 {
     /**
@@ -39,12 +39,12 @@ class Language
 
     /**
      * Config a subset file to load
-     * 
+     *
      * @param  string $file File which contains subset data.
      */
     public function __construct(string $file)
     {
-        $this->file = $file;        
+        $this->file = $file;
     }
 
     /**
@@ -74,10 +74,12 @@ class Language
 
     /**
      * Get frequencies by ngrams
+     *
+     * @return array<string,int>
      */
     public function getFreq(): array
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             $this->load();
         }
 
@@ -86,10 +88,12 @@ class Language
 
     /**
      * Get total numbers of occurences by ngram sizes
+     *
+     * @return array<int>
      */
     public function getNWords(): array
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             $this->load();
         }
 
@@ -101,7 +105,7 @@ class Language
      */
     public function getCode(): string
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             $this->load();
         }
 
