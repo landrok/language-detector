@@ -35,8 +35,8 @@ Features
 - Learning steps are already done, library is ready to use
 - Small code, small footprint
 - N-grams algorithm
-- Supports PHP 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0 and HHVM
-  The latest release 1.3.x only supports PHP>=7.2
+- Supports PHP 5.4+, 7+ and 8+ and HHVM
+  The latest release 1.4.x only supports PHP>=7.4
 
 
 Install
